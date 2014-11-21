@@ -9,12 +9,12 @@ dependencies:
   override:
     - docker info
     - if [[ -e ~/docker/image.tar ]]; then docker load -i ~/docker/image.tar; fi
-    - docker build -t danielnbarbosa/docker-loggly-agent .
-    - mkdir -p ~/docker; docker save danielnbarbosa/docker-loggly-agent > ~/docker/image.tar
+    - docker build -t danielnbarbosa/loggly-agent .
+    - mkdir -p ~/docker; docker save danielnbarbosa/loggly-agent > ~/docker/image.tar
 
 test:
   override:
-    - /bin/bash -c "/usr/bin/docker run -d -p 514/udp --name loggly-agent -e TOKEN=foo -e TAG=Docker danielnbarbosa/docker-loggly-agent"
+    - /bin/bash -c "/usr/bin/docker run -d -p 514/udp --name loggly-agent -e TOKEN=foo -e TAG=Docker danielnbarbosa/loggly-agent"
 
 deployment:
   coreos: 
