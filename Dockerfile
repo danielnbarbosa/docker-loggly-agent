@@ -1,0 +1,1 @@
+FROM sendgridlabs/loggly-docker

@@ -1,0 +1,15 @@
+[Unit]
+Description=loggly agent
+After=docker.service
+Requires=docker.service
+
+[Service]
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker kill loggly-agent
+ExecStartPre=-/usr/bin/docker rm loggly-agent
+ExecStartPre=/usr/bin/docker pull danielnbarbosa/docker-loggly-agent
+ExecStart=/usr/bin/bash -c "/usr/bin/docker run -p 514/udp --name loggly-agent -e TOKEN=`etcdctl get /logapikey` -e TAG=Docker danielnbarbosa/docker-loggly-agent"
+ExecStop=/usr/bin/docker stop loggly-agent
+
+[X-Fleet]
+Conflicts=loggly-agent@*.service
